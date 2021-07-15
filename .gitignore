@@ -8,3 +8,4 @@ gradle.properties
 
 .DS_Store
 Project.settings
+.idea

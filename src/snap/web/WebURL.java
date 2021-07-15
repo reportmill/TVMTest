@@ -228,7 +228,7 @@ public class WebURL {
     public boolean isFound()
     {
         // Handle File
-        if (!SnapUtils.isTeaVM && _src instanceof File)
+        if (!SnapUtils.isTeaVM() && _src instanceof File)
             return ((File)_src).exists();
 
         // Otherwise see if getHead() returns OK
@@ -241,7 +241,7 @@ public class WebURL {
     public long getLastModTime()
     {
         // For the time being, just return bogus value when TeaVM checks
-        if (SnapUtils.isTeaVM) return 1000000L;
+        if (SnapUtils.isTeaVM()) return 1000000L;
 
         // Handle File or URL
         if (_src instanceof File)
@@ -273,7 +273,7 @@ public class WebURL {
     public byte[] getBytesOrThrow() throws IOException
     {
         // Handle File or URL
-        if (!SnapUtils.isTeaVM && (_src instanceof File || _src instanceof URL))
+        if (!SnapUtils.isTeaVM() && (_src instanceof File || _src instanceof URL))
             return SnapUtils.getBytesOrThrow(_src);
 
         // Otherwise get response and return bytes

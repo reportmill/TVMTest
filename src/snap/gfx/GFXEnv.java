@@ -5,8 +5,11 @@ package snap.gfx;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.util.function.Consumer;
+
+import snap.swing.AWTEnv;
 import snap.util.*;
 import snap.web.*;
+import snaptea.TV;
 
 /**
  * An adapter class for drawing in a native environment (Java2D, JavaFX).
@@ -31,12 +34,11 @@ public abstract class GFXEnv {
      */
     private static void setDefaultEnv()
     {
-        // Get class name for platform GFXEnv
-        String cname = SnapUtils.getPlatform()==SnapUtils.Platform.TEAVM ? "snaptea.TV" : "snap.swing.AWTEnv";
-
-        // Try Swing
-        try { Class.forName(cname).newInstance(); }
-        catch(Exception e) { System.err.println("GFXEnv.setDefaultEnv: Can't set GFXEnv " + cname + ", " + e); }
+        if (SnapUtils.isTeaVM()) {
+            new TV();
+        } else {
+            new AWTEnv();
+        }
     }
 
     /**

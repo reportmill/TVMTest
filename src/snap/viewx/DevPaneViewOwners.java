@@ -310,13 +310,8 @@ public class DevPaneViewOwners extends ViewOwner {
     private void openFilenameBytes(String aFilename, byte[] theBytes)
     {
         // Get file
-        File file = SnapUtils.isTeaVM ? new File('/' + aFilename) :
+        File file = SnapUtils.isTeaVM() ? new File('/' + aFilename) :
             FileUtils.getTempFile(aFilename);
-
-        // TeaVM seems to sometimes use remnants of old file. This has been fixed
-        if (SnapUtils.isTeaVM)
-            try { file.delete(); }
-            catch (Exception e) { System.err.println("DevPaneViewOwners.showInSnapBuilder: Error deleting file"); }
 
         // Write HTML string to temp HTML file
         try { FileUtils.writeBytes(file, theBytes); }
@@ -327,7 +322,7 @@ public class DevPaneViewOwners extends ViewOwner {
         }
 
         // Open temp HTML file
-        if (SnapUtils.isTeaVM)
+        if (SnapUtils.isTeaVM())
             GFXEnv.getEnv().openFile(file);
         else GFXEnv.getEnv().openURL(file);
     }

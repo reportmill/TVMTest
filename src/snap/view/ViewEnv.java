@@ -4,8 +4,10 @@
 package snap.view;
 import java.util.*;
 import snap.geom.Rect;
+import snap.swing.SwingViewEnv;
 import snap.util.*;
 import snap.web.WebURL;
+import snaptea.TV;
 
 /**
  * An interface for platform specific UI functionality.
@@ -42,12 +44,11 @@ public abstract class ViewEnv {
      */
     private static void setDefaultEnv()
     {
-        // Get class name for platform GFXEnv
-        String cname = SnapUtils.getPlatform()==SnapUtils.Platform.TEAVM ? "snaptea.TV" : "snap.swing.SwingViewEnv";
-
-        // Try Swing
-        try { Class.forName(cname).newInstance(); }
-        catch(Exception e) { System.err.println("ViewEnv.setDefaultEnv: Can't set ViewEnv: " + cname + ", " + e); }
+        if (SnapUtils.isTeaVM()) {
+            new TV();
+        } else {
+            new SwingViewEnv();
+        }
     }
 
     /**
