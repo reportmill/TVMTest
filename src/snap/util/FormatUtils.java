@@ -60,10 +60,6 @@ public class FormatUtils {
         DecimalFormat fmt = getDecimalFormat(aPattern);
         String str = fmt.format(aNum);
 
-        // TeaVM seem to have issues with: #.## and .977757? Fixed: https://github.com/konsoletyper/teavm/issues/557
-        if (SnapUtils.isTeaVM && str.indexOf(':') >= 0 || str.equals("-"))
-            return String.valueOf(aNum);
-
         // Return string
         return str;
     }

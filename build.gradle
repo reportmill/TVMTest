@@ -2,6 +2,7 @@
 plugins {
     id 'java'
     id 'application'
+    id 'org.openjfx.javafxplugin' version '0.0.9'
 }
 
 sourceSets.main.java.srcDirs = ['src']
@@ -11,48 +12,30 @@ java {
     sourceCompatibility = JavaVersion.VERSION_1_8
     targetCompatibility = JavaVersion.VERSION_1_8
 }
+javafx {
+    version = "15.0.1"
+    modules = [ 'javafx.controls', 'javafx.swing', 'javafx.media' ]
+}
 
 repositories {
     mavenCentral()
 
     // Maven package repository for latest TeaVM
-    //maven { url 'https://teavm.org/maven/repository' }
+    maven { url 'https://teavm.org/maven/repository' }
 
     // Jitpack.io builds maven packages from Github repositories
-    maven { url 'https://jitpack.io' }
+    //maven { url 'https://jitpack.io' }
 }
 
-project.ext.teavmVersion = "0.7.0-SNAPSHOT"
+project.ext.teavmVersion = "0.7.0-dev-1196"
 
 dependencies {
 
     // References to teavm maven package at teavm.org/maven
-    /*compile group: 'org.teavm', name: 'teavm', version: "$teavmVersion"
-    compile group: 'org.teavm', name: 'teavm-jso', version: "$teavmVersion"
-    compile group: 'org.teavm', name: 'teavm-jso-apis', version: "$teavmVersion"
-    compile group: 'org.teavm', name: 'teavm-jso-impl', version: "$teavmVersion"
-    compile group: 'org.teavm', name: 'teavm-classlib', version: "$teavmVersion"
-    compile group: 'org.teavm', name: 'teavm-core', version: "$teavmVersion"
-    compile group: 'org.teavm', name: 'teavm-interop', version: "$teavmVersion"
-    compile group: 'org.teavm', name: 'teavm-platform', version: "$teavmVersion"
-    compile group: 'org.teavm', name: 'teavm-tooling', version: "$teavmVersion"
-    compile group: 'org.teavm', name: 'teavm-devserver', version: "$teavmVersion"
-    implementation 'commons-cli:commons-cli:1.4'*/
-
-
-    // This artifact has TeaVM built by jitpack.io
-    compile 'com.github.konsoletyper.teavm:teavm:220537d984'
-    compile 'com.github.konsoletyper.teavm:teavm-jso:220537d984'
-    compile 'com.github.konsoletyper.teavm:teavm-jso-apis:220537d984'
-    compile 'com.github.konsoletyper.teavm:teavm-jso-impl:220537d984'
-    compile 'com.github.konsoletyper.teavm:teavm-classlib:220537d984'
-    compile 'com.github.konsoletyper.teavm:teavm-core:220537d984'
-    compile 'com.github.konsoletyper.teavm:teavm-interop:220537d984'
-    compile 'com.github.konsoletyper.teavm:teavm-platform:220537d984'
-    compile 'com.github.konsoletyper.teavm:teavm-tooling:220537d984'
-    compile 'com.github.konsoletyper.teavm:teavm-maven:220537d984'
-    compile 'com.github.konsoletyper.teavm:teavm-devserver:220537d984'
-    implementation 'commons-cli:commons-cli:1.4'
+    implementation group: 'org.teavm', name: 'teavm-jso', version: "$teavmVersion"
+    implementation group: 'org.teavm', name: 'teavm-jso-apis', version: "$teavmVersion"
+    implementation group: 'org.teavm', name: 'teavm-cli', version: "$teavmVersion"
+    //compile group: 'org.teavm', name: 'teavm-devserver', version: "$teavmVersion"
 }
 
 // Define the main class for the application
@@ -67,5 +50,8 @@ task tv_compile (type: JavaExec){
     args = [ "-g", "-G", mainClassName, "-d", '/tmp/tvmout' ]
     maxHeapSize = '500m'
     classpath = sourceSets.main.runtimeClasspath
+    doFirst {
+        println("CLASSPATH: " +  sourceSets.main.runtimeClasspath.getAsPath())
+    }
 }
 

@@ -171,8 +171,8 @@ public class HTTPRequest {
 
         // Get ContentType, Length, LastModified
         resp._contentType = connection.getContentType();
-        resp._contentLength = snap.util.SnapUtils.isTeaVM? 0 : connection.getContentLength();
-        resp._lastModified = snap.util.SnapUtils.isTeaVM? 0 : connection.getLastModified();
+        resp._contentLength = snap.util.SnapUtils.isTeaVM() ? 0 : connection.getContentLength();
+        resp._lastModified = snap.util.SnapUtils.isTeaVM() ? 0 : connection.getLastModified();
 
         // Get input stream
         InputStream inputStream = connection.getInputStream();

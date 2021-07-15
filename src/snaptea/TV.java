@@ -192,6 +192,6 @@ public class TV {
      */
     public static void set()
     {
-        if (SnapUtils.isTeaVM) TVViewEnv.set();
+        if (SnapUtils.isTeaVM()) TVViewEnv.set();
     }
 }
